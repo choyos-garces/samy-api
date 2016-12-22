@@ -1,0 +1,224 @@
+<?php
+namespace PanelBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as Unique;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Context\ExecutionContext;
+
+/**
+ * Class Recurso
+ * @package ResourcesBundle\Document\Inventario
+ * @ODM\Document(repositoryClass="PanelBundle\Repository\RecursoRepository")
+ * @ODM\HasLifecycleCallbacks()
+ * @ODM\UniqueIndex(keys={"nombre"=1})
+ * @Unique(fields={"nombre"}, message="Un recurso con ese nombre ya existe.")
+ */
+class Recurso
+{
+    /**
+     * @var string
+     * @ODM\Id()
+     */
+    protected $id;
+
+    /**
+     * @var string
+     * @ODM\String()
+     * @Assert\NotBlank(message="El nombre del recurso es requerrido.")
+     */
+    protected $nombre;
+
+    /**
+     * @var Aplicacion
+     * @ODM\ReferenceOne(targetDocument="Aplicacion")
+     * @Assert\NotBlank()
+     * @Serializer\MaxDepth(1)
+     */
+    protected $aplicacion;
+
+    /**
+     * @var Seccion
+     * @ODM\ReferenceOne(targetDocument="Seccion")
+     * @Assert\NotBlank()
+     * @Serializer\MaxDepth(1)
+     */
+    protected $seccion;
+
+    /**
+     * @var string
+     * @ODM\String()
+     */
+    protected $detalle;
+
+    /**
+     * @ODM\ReferenceMany(targetDocument="Categoria", mappedBy="recurso")
+     */
+    private $categorias;
+
+    /**
+     * @var boolean
+     * @ODM\Boolean()
+     * @Assert\NotNull(message="Un valor es requerrido.", groups={"Edit"})
+     */
+    protected $active;
+
+    /**
+     * @var \DateTime
+     * @ODM\Date()
+     */
+    protected $created;
+
+    /**
+     * @ODM\PrePersist()
+     */
+    public function prePersist() {
+        $this->created = new \DateTime();
+    }
+
+    /**
+     * Get id
+     *
+     * @return string $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return $this
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string $nombre
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * @return Aplicacion
+     */
+    public function getAplicacion()
+    {
+        return $this->aplicacion;
+    }
+
+    /**
+     * @param Aplicacion $aplicacion
+     */
+    public function setAplicacion($aplicacion)
+    {
+        $this->aplicacion = $aplicacion;
+    }
+
+
+    /**
+     * @return Seccion
+     */
+    public function getSeccion()
+    {
+        return $this->seccion;
+    }
+
+    /**
+     * @param Seccion $seccion
+     */
+    public function setSeccion($seccion)
+    {
+        $this->seccion = $seccion;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return $this
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean $active
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return $this
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime $created
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set detalle
+     *
+     * @param string $detalle
+     * @return $this
+     */
+    public function setDetalle($detalle)
+    {
+        $this->detalle = $detalle;
+        return $this;
+    }
+
+    /**
+     * Get detalle
+     *
+     * @return string $detalle
+     */
+    public function getDetalle()
+    {
+        return $this->detalle;
+    }
+
+    /**
+     * @param ExecutionContext $context
+     * @param $payload
+     * @Assert\Callback()
+     */
+    public function validate(ExecutionContext $context, $payload) {
+        if($this->getAplicacion()->getId() != $this->getSeccion()->getAplicacion()->getId()) {
+            $context->buildViolation('La seccion y no pertenece a la aplicacion solicitada.')
+                ->atPath('aplicacion')
+                ->addViolation()
+            ;
+        }
+    }
+}

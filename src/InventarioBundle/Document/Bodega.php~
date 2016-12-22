@@ -1,0 +1,60 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: choyo
+ * Date: 11/26/2016
+ * Time: 8:26 AM
+ */
+
+namespace InventarioBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Class Material
+ * @ODM\Document(repositoryClass="InventarioBundle\Repository\BodegaRepository")
+ * @ODM\HasLifecycleCallbacks()
+ */
+class Bodega
+{
+    /**
+     * @var string
+     * @ODM\Id()
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @ODM\String()
+     * @Assert\NotBlank(message="El nombre no puede quedar en blanco")
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     * @ODM\String()
+     * @Assert\NotBlank(message="Un codigo es requerrido")
+     */
+    private $codigo;
+
+    /**
+     * @var string
+     * @ODM\Boolean()
+     * @Assert\NotNull(message="Estado no puede estar en blanco.", groups={"Edit"})
+     */
+    private $active;
+
+    /**
+     * @var \DateTime
+     * @ODM\Date()
+     */
+    private $created;
+    
+    /**
+     * @ODM\PrePersist()
+     */
+    public function prePersist() {
+        $this->created = new \DateTime();
+    }
+}

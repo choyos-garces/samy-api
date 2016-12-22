@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Admin Panel</h1>
+    <ul>
+        <li><a href="{{ path('users') }}">User</a></li>
+        <li><a href="{{ path('clients') }}">Client</a></li>
+    </ul>
+{% endblock %}

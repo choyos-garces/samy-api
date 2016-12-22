@@ -1,0 +1,19 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+inventario:
+    resource: "@InventarioBundle/Controller/"
+    type:     annotation
+    prefix:   /inventario
+
+resources:
+    resource: "@PanelBundle/Controller/"
+    type:     annotation
+    prefix:   /panel
+
+administracion:
+    resource: "@AdministracionBundle/Controller/"
+    type: annotation
+    prefix: /administracion

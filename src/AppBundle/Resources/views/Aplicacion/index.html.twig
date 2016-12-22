@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+ {% block body %}
+     <a href="{{ path('aplicaciones_new') }}">Nuevo</a>
+     <table class="table table-hover">
+         {% for aplicacion in aplicaciones %}
+             <tr>
+                 <td><a href="{{ path('aplicaciones_edit', { id : aplicacion.id}) }}">{{ aplicacion.nombre }}</a></td>
+             </tr>
+         {% endfor %}
+     </table>
+ {% endblock %}

@@ -1,0 +1,30 @@
+services:
+#    app.example:
+#        class: AppBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+    app.security.login_authenticator:
+        class: AppBundle\Security\LoginFormAuthenticator
+        autowire: true
+
+    app.doctrine.hash_password_listner:
+        class: AppBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine_mongodb.odm.event_subscriber }
+
+    app.doctrine.generate_client_secret:
+        class: AppBundle\Doctrine\GenerateClientSecretListner
+        autowire: true
+        tags:
+            - { name: doctrine_mongodb.odm.event_subscriber }
+
+    app.collection_query_parameters:
+        class: AppBundle\Api\CollectionQueryParameters
+        autowire: true
+
+    app.api_exception_subscriber:
+        class: AppBundle\EventListener\ApiExceptionSubscriber
+        arguments: ['%kernel.debug%']
+        tags:
+            - { name: kernel.event_subscriber}

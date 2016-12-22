@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Usuario{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="#" class="btn btn-danger pull-right">Disable</a>
+        <h3>Edit: <strong>{{ user.username }}</strong></h3>
+    </div>
+    <hr>
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword) }}
+        {{ form_row(form.clients) }}
+        <button type="submit" class="btn btn-primary pull-right" formnovalidate>Register</button>
+    {{ form_end(form) }}
+{% endblock %}

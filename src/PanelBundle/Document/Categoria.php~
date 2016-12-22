@@ -1,0 +1,49 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: choyo
+ * Date: 11/30/2016
+ * Time: 9:06 AM
+ */
+
+namespace PanelBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as Unique;
+use JMS\Serializer\Annotation as Serializer;
+
+/**
+ * Class Categoria
+ * @package ResourcesBundle\Document\Inventario
+ * @ODM\Document(repositoryClass="PanelBundle\Repository\CategoriaRepository")
+ * @ODM\HasLifecycleCallbacks()
+ * @Unique(fields={"nombre"}, message="Un recurso con ese nombre ya existe.")
+ */
+class Categoria
+{
+    /**
+     * @var string
+     * @ODM\Id()
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @ODM\String()
+     * @Assert\NotBlank()
+     */
+    private $nombre;
+
+    /**
+     * @var boolean
+     * @ODM\Boolean()
+     */
+    private $active;
+
+    /**
+     * @var Recurso
+     * @ODM\ReferenceOne(targetDocument="Recurso", inversedBy="categorias")
+     */
+    private $recurso;
+}

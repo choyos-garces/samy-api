@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Client{% endblock %}
+
+{% block body %}
+    <div>
+        <h3>Client</h3>
+    </div>
+    <hr>
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.url) }}
+        <button type="submit" class="btn btn-primary pull-right" formnovalidate>Register</button>
+    {{ form_end(form) }}
+{% endblock %}

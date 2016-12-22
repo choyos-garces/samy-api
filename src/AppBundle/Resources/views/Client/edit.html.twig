@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Client{% endblock %}
+
+{% block body %}
+    <div>
+        {% if client.active %}
+            <a href="{{ path("client_disable", {name: client.name}) }}" class="btn btn-danger pull-right">Disable</a>
+        {% else %}
+            <a href="{{ path("client_enable", {name: client.name}) }}" class="btn btn-success pull-right">Enable</a>
+        {% endif %}
+        <h3>Client: <strong>{{ client.name }}</strong></h3>
+    </div>
+    <hr>
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.url) }}
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="client_create_form_secret">Secret</label>
+            <div class="col-sm-10"><input type="text" id="client_create_form_secret"class="form-control" value="{{ client.secret }}" readonly></div>
+        </div>
+        <button type="submit" class="btn btn-primary pull-right" formnovalidate>Register</button>
+    {{ form_end(form) }}
+{% endblock %}
+

@@ -1,0 +1,87 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: choyo
+ * Date: 12/19/2016
+ * Time: 1:16 AM
+ */
+
+namespace InventarioBundle\Document;
+
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
+/**
+ * Class GuiaTransferencia
+ * @package InventarioBundle\Document
+ * @ODM\Document(repositoryClass="InventarioBundle\Repository\GuiaTransferenciaRepository")
+ * @ODM\HasLifecycleCallbacks()
+ */
+class GuiaTransferencia
+{
+
+    const STATUS_WAITING = "waiting";
+    const STATUS_DONE = "done";
+    const STATUS_ERROR = "error";
+
+    /**
+     * @var string
+     * @ODM\Id()
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @ODM\String()
+     * @ODM\UniqueIndex()
+     */
+    private $numeroGuia;
+
+    /**
+     * @var MovimientoInventario
+     * @ODM\ReferenceOne(targetDocument="MovimientoInventario")
+     */
+    private $movimientoOrigen;
+
+    /**
+     * @var MovimientoInventario
+     * @ODM\ReferenceOne(targetDocument="MovimientoInventario")
+     */
+    private $movimientoDestino;
+
+    /**
+     * @var string
+     * @ODM\String()
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     * @ODM\Date()
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     * @ODM\Date()
+     */
+    private $updated;
+    
+    /**
+     * @ODM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $date = new \DateTime();
+        $this->created = $date;
+        $this->updated = $date;
+    }
+
+    /**
+     * @ODM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updated = new \DateTime();
+    }
+}

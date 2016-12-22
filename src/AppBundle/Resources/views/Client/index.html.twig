@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clients{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="{{ path('client_new') }}" class="btn pull-right">New Client</a>
+        <h3>Clients</h3>
+    </div>
+    <hr>
+    {% for msg in app.session.flashBag.get("success") %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
+    {% for msg in app.session.flashBag.get("error") %}
+        <div class="alert alert-warning">
+            {{ msg }}
+        </div>
+    {% endfor %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Redirect URL</th>
+                <th colspan="2">Secret</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ path('client_show', { name : client.name}) }}">{{ client.name }}</a></td>
+                    <td>{{ client.url }}</td>
+                    <td>{{ client.secret }}</td>
+                    <td><a href="{{ path('client_edit', { name : client.name}) }}">Edit</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

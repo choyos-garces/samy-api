@@ -1,0 +1,223 @@
+<?php
+namespace InventarioBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use PanelBundle\Document\Categoria;
+use PanelBundle\Document\Recurso;
+use PanelBundle\Document\Seccion;
+use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Context\ExecutionContext;
+
+/**
+ * Class Material
+ * @ODM\Document(repositoryClass="InventarioBundle\Repository\MaterialRepository")
+ * @ODM\HasLifecycleCallbacks()
+ */
+class Material
+{
+    /**
+     * @var string
+     * @ODM\Id()
+     */
+    protected $id;
+
+    /**
+     * @var Recurso
+     * @ODM\ReferenceOne("PanelBundle\Document\Recurso")
+     * @Assert\NotNull(message="Tipo de material no assignado.")
+     * @Serializer\MaxDepth(1)
+     */
+    protected $tipoMaterial;
+
+    /**
+     * @var Categoria
+     * @ODM\ReferenceOne("PanelBundle\Document\Categoria")
+     * @Assert\NotNull(message="Categoria no assignada.")
+     * @Serializer\MaxDepth(1)
+     */
+    protected $categoria;
+
+    /**
+     * @var string
+     * @ODM\String()
+     * @Assert\NotBlank(message="EL nombre no puede quedar en blanco.")
+     */
+    protected $nombre;
+
+    /**
+     * @var string
+     * @ODM\String()
+     * @Assert\NotBlank(message="Un codigo tiene que ser generado.")
+     */
+    protected $codigo;
+
+    /**
+     * @var string
+     * @ODM\String()
+     */
+    protected $descripcion;
+
+    /**
+     * @var boolean
+     * @ODM\Boolean()
+     * @Assert\NotNull(message="Un valor es requerrido.", groups={"Edit"})
+     */
+    protected $active;
+
+    /**
+     * @var \DateTime
+     * @ODM\Date()
+     */
+    protected $created;
+
+    /**
+     * @ODM\PrePersist()
+     */
+    public function prePersist() {
+        $this->created = new \DateTime();
+    }
+
+    /**
+     * @param ExecutionContext $context
+     * @param $payload
+     */
+    public function validate(ExecutionContext $context, $payload) {
+        if($this->getTipoMaterial()->getNombre() == "Tipo Material") {
+            $context->buildViolation('El material no pertenece a la recurso solicitado.')
+                ->atPath('tipoMaterial')
+                ->addViolation()
+            ;
+        }
+
+        /** @var Categoria[] $categorias */
+        $categorias = $this->getTipoMaterial()->getCategorias();
+        $categoiaExist = false;
+
+        foreach ($categorias as $categoria) {
+            if( $categoria->getId() == $this->categoria->getId()) {
+                $categoiaExist = true;
+            }
+        }
+
+        if( !$categoiaExist ) {
+            $context->buildViolation('Categoria assignada no pertenece al Tipo de material.')
+                ->atPath('categoria')
+                ->addViolation()
+            ;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return Recurso
+     */
+    public function getTipoMaterial()
+    {
+        return $this->tipoMaterial;
+    }
+
+    /**
+     * @param Seccion $tipoMaterial
+     */
+    public function setTipoMaterial($tipoMaterial)
+    {
+        $this->tipoMaterial = $tipoMaterial;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * @param string $nombre
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * @param string $codigo
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+    }
+
+    /**
+     * @return Categoria
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * @param Seccion $categoria
+     */
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * @param string $descripcion
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param boolean $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+}

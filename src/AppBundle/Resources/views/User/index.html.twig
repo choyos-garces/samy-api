@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="{{ path('user_new') }}" class="btn pull-right">Crear Usuario</a>
+        <h3>Users</h3>
+    </div>
+    <hr>
+    {% for msg in app.session.flashBag.get("success") %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Apps</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ path('user_show', {username : user.username}) }}">{{ user.username }}</a></td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.clients | length }}</td>
+                    <td><a href="{{ path('user_edit', {username : user.username}) }}">Editar</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
