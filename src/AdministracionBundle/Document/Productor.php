@@ -24,55 +24,55 @@ class Productor
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank(message="El nombre no puede quedar en blanco.")
      */
     private $nombre;
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank(message="El apellido no puede quedar en blanco.")
      */
     private $apellido;
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\Regex(pattern="/\d{10,13}$/", message="Cedula o R.U.C. invalido.")
      */
     private $ruc;
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\Email(message="El correo no es valido.")
      */
     private $correo;
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\Regex(pattern="/\d{6,10}$/", message="El numero de telefono no es valido.")
      */
     private $telefono;
 
     /**
      * @var boolean
-     * @ODM\Boolean()
+     * @ODM\Field(type="boolean")
      * @Assert\NotNull(message="Este campo no puede esta en blanco.", groups={"Edit"})
      */
     private $active;
 
     /**
      * @var \DateTime
-     * @ODM\Date()
+     * @ODM\Field(type="date")
      */
     private $created;
 
     /**
      * @var \DateTime
-     * @ODM\Date()
+     * @ODM\Field(type="date")
      */
     private $edited;
 

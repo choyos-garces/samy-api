@@ -31,7 +31,7 @@ class Aplicacion
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank()
      */
     protected $nombre;

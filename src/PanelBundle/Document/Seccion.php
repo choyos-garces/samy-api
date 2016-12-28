@@ -38,7 +38,7 @@ class Seccion
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank()
      */
     private $nombre;

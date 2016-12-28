@@ -40,40 +40,40 @@ class Material
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank(message="EL nombre no puede quedar en blanco.")
      */
     protected $nombre;
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank(message="Un codigo tiene que ser generado.")
      */
     protected $codigo;
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      */
     protected $descripcion;
 
     /**
      * @var boolean
-     * @ODM\Boolean()
+     * @ODM\Field(type="boolean")
      * @Assert\NotNull(message="Un valor es requerrido.", groups={"Edit"})
      */
     protected $active;
 
     /**
      * @var \DateTime
-     * @ODM\Date()
+     * @ODM\Field(type="date")
      */
     protected $created;
 
     /**
      * @var \DateTime
-     * @ODM\Date()
+     * @ODM\Field(type="date")
      */
     private $edited;
 

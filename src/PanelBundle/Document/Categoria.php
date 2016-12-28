@@ -29,14 +29,14 @@ class Categoria
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank()
      */
     private $nombre;
 
     /**
      * @var boolean
-     * @ODM\Boolean()
+     * @ODM\Field(type="boolean")
      * @Assert\NotNull(message="Este campo no puede esta en blanco.", groups={"Edit"})
      */
     private $active;

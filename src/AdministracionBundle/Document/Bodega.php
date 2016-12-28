@@ -28,14 +28,14 @@ class Bodega
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank(message="El nombre no puede quedar en blanco")
      */
     private $nombre;
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      */
     private $descripcion;
 
@@ -48,7 +48,7 @@ class Bodega
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank(message="El codigo es requerrido.")
      * @Serializer\MaxDepth(1)
      */
@@ -56,20 +56,20 @@ class Bodega
 
     /**
      * @var string
-     * @ODM\Boolean()
+     * @ODM\Field(type="boolean")
      * @Assert\NotNull(message="Este campo no puede esta en blanco.", groups={"Edit"})
      */
     private $active;
 
     /**
      * @var \DateTime
-     * @ODM\Date()
+     * @ODM\Field(type="date")
      */
     private $created;
 
     /**
      * @var \DateTime
-     * @ODM\Date()
+     * @ODM\Field(type="date")
      */
     private $edited;
 

@@ -26,7 +26,7 @@ class Recurso
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      * @Assert\NotBlank(message="El nombre del recurso es requerrido.")
      */
     private $nombre;
@@ -49,7 +49,7 @@ class Recurso
 
     /**
      * @var string
-     * @ODM\String()
+     * @ODM\Field(type="string")
      */
     private $detalle;
 
@@ -61,14 +61,14 @@ class Recurso
 
     /**
      * @var boolean
-     * @ODM\Boolean()
+     * @ODM\Field(type="boolean")
      * @Assert\NotNull(message="Este campo no puede esta en blanco.", groups={"Edit"})
      */
     private $active;
 
     /**
      * @var \DateTime
-     * @ODM\Date()
+     * @ODM\Field(type="date")
      */
     private $created;
 
