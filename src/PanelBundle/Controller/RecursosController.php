@@ -5,13 +5,13 @@ namespace PanelBundle\Controller;
 use AppBundle\Api\ApiErrorException;
 use AppBundle\Api\ApiErrorMessage;
 use AppBundle\Api\BaseController;
-use FOS\RestBundle\Controller\Annotations\Route;
 use JMS\Serializer\SerializationContext;
 use PanelBundle\Document\Categoria;
 use PanelBundle\Document\Recurso;
 use PanelBundle\Form\EditRecursoForm;
 use PanelBundle\Form\NewRecursoForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
