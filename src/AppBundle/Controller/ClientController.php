@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Document\Client;
 use AppBundle\Form\Type\ClientType;
-use FOS\RestBundle\Controller\Annotations\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
